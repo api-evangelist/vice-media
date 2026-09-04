@@ -1,0 +1,41 @@
+generated: '2026-09-04'
+method: probed
+source: live probes of vice.com, video.vice.com, api.vice.com and DNS on 2026-09-04
+versioning:
+  scheme: namespace-in-path
+  current: wp/v2
+  docs: null
+  note: The only version in play is WordPress core's REST namespace. vice.com advertises <meta name="generator"
+    content="WordPress 7.0.4" /> in its page head. Vice Media publishes no versioning policy of its own
+    and sets no version it controls.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: No deprecation policy is published, and no Sunset or Deprecation response header (RFC 8594) was
+    returned on any observed response.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_note: status.vice.com does not resolve (NXDOMAIN, 2026-09-04). No status or uptime page was
+  found on vice.com or vicemedia.com.
+changelog: null
+changelog_note: No API or product changelog is published. The site's editorial archive is not a changelog
+  and is not recorded as one.
+deprecated_operations: []
+deprecated_operations_note: 'No operation in either derived contract carries deprecated: true; the live
+  route-discovery documents declare none.'
+host_lifecycle_findings:
+- host: vicemediagroup.com
+  finding: TLS certificate expired
+  evidence: curl error 60 'certificate has expired' on https://vicemediagroup.com/, 2026-09-04
+  note: The www. form resolves and redirects to https://www.vicemedia.com/ with HTTP 200; only the apex
+    is broken.
+- host: video.vice.com
+  finding: live contract, effectively empty archive
+  evidence: 'GET /wp-json/wp/v2/posts?per_page=1 returned x-wp-total: 1, 2026-09-04'
+- host: www.vice.com
+  finding: no HSTS
+  evidence: no strict-transport-security header on the editorial host; api.vice.com does set it (max-age
+    31536000)

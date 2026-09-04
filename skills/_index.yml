@@ -1,0 +1,30 @@
+generated: '2026-09-04'
+method: generated
+source: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+note: Vice Media publishes no AGENTS.md and no skill files; these are generated from the derived contract.
+  Every operationId referenced was grepped out of that file, and every operation used was confirmed to
+  return HTTP 200 anonymously on 2026-09-04.
+skills:
+- file: vice-media-search-the-archive.md
+  name: Search the VICE editorial archive
+  api: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+  operations:
+  - get_wp_v2_posts
+  - get_wp_v2_posts_by_id
+  - get_wp_v2_search
+- file: vice-media-walk-editions-and-taxonomies.md
+  name: Walk VICE editions, sections and bylines
+  api: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+  operations:
+  - get_wp_v2_platform_languages
+  - get_wp_v2_categories
+  - get_wp_v2_byline
+  - get_wp_v2_vice_section
+  - get_wp_v2_taxonomies
+  - get_wp_v2_types
+- file: vice-media-embed-a-vice-article.md
+  name: Embed a VICE article with oEmbed
+  api: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+  operations:
+  - get_oembed_1_0_embed
+  - get_wp_v2_posts

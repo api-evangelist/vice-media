@@ -1,18 +1,117 @@
 aid: vice-media
 name: Vice Media
-description: 'Vice Media is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Vice Media is the Brooklyn, New York youth-culture and news media company founded in 1994 in Montreal
+  by Suroosh Alvi, Shane Smith and Gavin McInnes, which grew from the VICE magazine into a global
+  multi-platform publisher, film and television studio and creative agency before filing for Chapter 11
+  in May 2023 and being acquired for $350 million by a consortium led by Fortress Investment Group. It
+  operates today through Vice Studios Group, Vice TV, the Virtue creative agency and Vice Digital. Vice
+  Media runs no developer programme, publishes no API documentation, portal, SDK or pricing, and sells no
+  API product. It is catalogued here because its flagship editorial property, vice.com — owned and
+  operated under the VICE brand by VICE Digital Publishing, LLC, the Savage Ventures joint venture Vice
+  Media announced in 2024 — serves a live, anonymously readable WordPress REST API of 601 routes that the
+  site advertises in the head of every page, exposing an editorial archive of 822,047 posts across 20
+  language editions, plus an oEmbed 1.0 provider endpoint and RSS 2.0 syndication. A second WordPress
+  install answers on video.vice.com, and a separate authenticated platform gateway on api.vice.com
+  answers every anonymous request with HTTP 401.
+image: https://www.vice.com/wp-content/uploads/sites/2/2024/08/VICE-logo.jpeg?w=1400
 url: https://raw.githubusercontent.com/api-evangelist/vice-media/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: enriched
+x-tier-reason: enrichment pass 2026-09-04
+x-api-posture: no-product-api
+x-api-posture-basis: observed
+x-api-posture-note: >-
+  Vice Media publishes no developer portal, API reference, SDK, API pricing or support channel. Every
+  machine-readable surface catalogued here is infrastructure of its publishing properties, not a
+  commercial API product.
+x-operator: >-
+  The vice.com and video.vice.com WordPress surfaces are served by VICE Digital Publishing, LLC, which the
+  site's own About page (https://www.vice.com/en/about-vice-digital-publishing/, HTTP 200, fetched
+  2026-09-04) describes as "a Savage Ventures company" at 1402 3rd Ave N, Nashville TN. They are recorded
+  under Vice Media because vice.com is the VICE brand's own domain and the entity is the Vice
+  Digital Publishing joint venture Vice Media formed with Savage Ventures in 2024, in which Vice Media
+  retained brand control. Content licensing and pitches route to savage.ventures addresses; press
+  (press@vice.com), advertising (sales@vice.com) and security (infosec@vice.com) remain on vice.com.
 specificationVersion: '0.20'
 created: '2026-09-04'
 modified: '2026-09-04'
 tags:
 - Company
-apis: []
+- Media
+- Publishing
+- News
+- Digital Media
+- Content
+- Video
+- Entertainment
+- WordPress
+- Syndication
+- oEmbed
+- Brooklyn
+apis:
+- aid: vice-media:vice-media-wordpress-rest-api
+  name: VICE WordPress REST API
+  description: >-
+    The live WordPress REST API served by vice.com. 601 routes are declared by the route-discovery
+    document at https://www.vice.com/wp-json/, which the site advertises in the head of every page as
+    <link rel="https://api.w.org/">. The core content namespaces read anonymously — posts (822,047 of
+    them per the X-WP-Total header), pages, media, search, the vice_section / profile / sp_product custom
+    post types, and the category, tag, byline, brand and platform-language taxonomies. Users, settings,
+    block types and every editorial plugin namespace return HTTP 401.
+  humanURL: https://www.vice.com/wp-json/
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - Content
+  - Publishing
+  - WordPress
+  - oEmbed
+  properties:
+  - type: OpenAPI
+    url: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+  - type: DataModel
+    url: data-model/vice-media-data-model.yml
+  - type: ErrorCatalog
+    url: errors/vice-media-problem-types.yml
+  - type: Conventions
+    url: conventions/vice-media-conventions.yml
+- aid: vice-media:vice-media-video-wordpress-rest-api
+  name: VICE Video WordPress REST API
+  description: >-
+    A second WordPress install answering on video.vice.com with 586 declared routes and the same core
+    content namespaces, advertised the same way in the page head. Its public archive is effectively
+    empty — the posts collection returns X-WP-Total 1 — so the surface is a live contract with almost no
+    content behind it.
+  humanURL: https://video.vice.com/wp-json/
+  baseURL: https://video.vice.com/wp-json
+  tags:
+  - Content
+  - Video
+  - WordPress
+  properties:
+  - type: OpenAPI
+    url: openapi/_ae-authored/vice-media-video-wp-rest-openapi.yml
+  - type: Overlay
+    url: overlays/vice-media-video-wp-rest-overlay.yaml
+- aid: vice-media:vice-media-platform-api
+  name: VICE Platform API
+  description: >-
+    An authenticated platform gateway on api.vice.com, running nginx in front of an Express service that
+    identifies itself as "api-auth 1.13.2" in the x-app-version response header. Every path probed
+    anonymously on 2026-09-04, including a control path that cannot exist, returned an identical HTTP 401
+    {"message":"No client found attached to request","code":"invalid_req_client","status":401}, so no
+    contract, path list or documentation is observable without a client credential. Its
+    content-security-policy names the legacy VICE international properties (viceland.com, viceland.nl,
+    vicesports.nl, vicemoney.nl, vicebelgique.com) as permitted frame ancestors.
+  humanURL: https://api.vice.com/
+  baseURL: https://api.vice.com
+  tags:
+  - Platform
+  - Gated
+  properties:
+  - type: Authentication
+    url: authentication/vice-media-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +119,87 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://www.vice.com/
+- type: CorporateWebsite
+  url: https://www.vicemedia.com/
+- type: About
+  url: https://www.vice.com/en/about-vice-digital-publishing/
+- type: TermsOfService
+  url: https://www.vice.com/en/terms/
+- type: PrivacyPolicy
+  url: https://www.vice.com/en/privacy/
+- type: Security
+  url: https://www.vice.com/en/vice-responsible-disclosure-policy/
+- type: VulnerabilityDisclosure
+  url: security/vice-media-vulnerability-disclosure.yml
+- type: GitHubOrganization
+  url: https://github.com/VICEMedia
+- type: Blog
+  url: https://www.vice.com/en/
+- type: BlogRSS
+  url: https://www.vice.com/en/feed/
+- type: Pricing
+  url: https://www.vice.com/en/section/membership/
+- type: SignUp
+  url: https://www.vice.com/en/section/membership/
+- type: Accessibility
+  url: https://www.vice.com/en/vice-media-accessibility-statement/
+- type: Newsletter
+  url: https://newsletter.vice.com
+- type: SecondaryMarket
   url: https://forgeglobal.com/vice-media_stock/
+- type: OpenAPI
+  url: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+- type: Overlay
+  url: overlays/vice-media-wp-rest-overlay.yaml
+- type: LLMsTxt
+  url: llms/vice-media-llms.txt
+- type: X-MCPServerCandidate
+  url: mcp/vice-media-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/vice-media-authentication.yml
+- type: Conventions
+  url: conventions/vice-media-conventions.yml
+- type: ErrorCatalog
+  url: errors/vice-media-problem-types.yml
+- type: DataModel
+  url: data-model/vice-media-data-model.yml
+- type: Lifecycle
+  url: lifecycle/vice-media-lifecycle.yml
+- type: Conformance
+  url: conformance/vice-media-conformance.yml
+- type: Packages
+  url: packages/vice-media-packages.yml
+- type: Plans
+  url: plans/vice-media-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/vice-media-rate-limits.yml
+- type: DomainSecurity
+  url: security/vice-media-domain-security.yml
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v3
+x-enrichment-notes: >-
+  Deliberately absent, each a verified negative probed on 2026-09-04. WellKnown and SecurityTxt: every
+  named /.well-known path plus /apis.json and /apis.yml returned 404 on www.vice.com, video.vice.com and
+  www.vicemedia.com and 403 on api.vice.com, with a negative-control path returning the same, so the
+  probe is recorded in well-known/vice-media-well-known.yml with NO pointer. AgentCard:
+  /.well-known/agent-card.json and /.well-known/agent.json 404 on every host, so nothing was written.
+  MCPServer: no server exists on any host and no mcp namespace is declared, so the derived tool list
+  carries the X-MCPServerCandidate pointer, never MCPServer. SDKs and a first-party CLI: nothing on npm,
+  PyPI or any other registry, and the 56-repo VICEMedia GitHub org publishes no client library.
+  StatusPage: status.vice.com is NXDOMAIN and no uptime page exists anywhere. Deprecation: no policy and
+  no RFC 8594 Sunset or Deprecation header on any observed response. Idempotency: no replay-protection
+  contract exists on this surface, so no Idempotency pointer is emitted. TrustCenter and Compliance: no
+  certification, attestation or trust page is published. AsyncAPI and Webhooks: no event or webhook
+  surface. Postman, Roadmap, Sandbox, Changelog, CLI, Components, DeclineCodes, OAuthScopes, Protobuf and
+  WSDL: none published. DeveloperPortal, Documentation, APIReference, GettingStarted and Support: Vice
+  Media runs no developer programme at all, so none of these pages exists to point at. The Security
+  pointer is the company's published responsible-disclosure policy at
+  https://www.vice.com/en/vice-responsible-disclosure-policy/ (HTTP 200), which is linked from the site
+  footer but is NOT served at /.well-known/security.txt - the single cheapest fix available to this
+  provider. The Pricing and SignUp pointers are reader membership tiers, not API access. ContentSignal: well-known/vice-media-robots.txt is saved as evidence but carries NO pointer - the file declares 'User-agent: * / Disallow:' with no Content Signals policy and no AI-crawler rule, so asserting a consent signal the provider does not publish would over-credit it.

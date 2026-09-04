@@ -1,0 +1,16 @@
+# Added by savage robots-txt
+# Sitemap archive
+Sitemap: https://video.vice.com/sitemap.xml
+
+# BEGIN year-based sitemaps
+Sitemap: https://video.vice.com/sitemap-2024.xml
+# END year-based sitemaps
+
+
+# START YOAST BLOCK
+# ---------------------------
+User-agent: *
+Disallow:
+
+# ---------------------------
+# END YOAST BLOCK

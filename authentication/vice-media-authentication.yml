@@ -1,0 +1,68 @@
+generated: '2026-09-04'
+method: searched
+source: https://www.vice.com/wp-json/ (route-discovery document, HTTP 200) plus live anonymous probes
+  of api.vice.com
+docs: null
+note: Vice Media publishes no authentication documentation of any kind. This profile is read from the
+  live route-discovery document's own `authentication` block, from response headers observed on the wire,
+  and from the HTTP 401 bodies the hosts return anonymously.
+summary:
+  types:
+  - http
+  - apiKey
+  - opaque-client-credential
+  api_key_in:
+  - header
+  oauth2_flows: []
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  hosts:
+  - https://www.vice.com
+  - https://video.vice.com
+  authorization_endpoint: https://www.vice.com/wp-admin/authorize-application.php
+  evidence: The /wp-json/ index declares authentication.application-passwords.endpoints.authorization
+    verbatim; video.vice.com declares the same at its own /wp-admin/authorize-application.php.
+  sources:
+  - openapi/vice-media-wp-rest-discovery-original.json
+- name: wpNonce
+  type: apiKey
+  in: header
+  name_header: X-WP-Nonce
+  hosts:
+  - https://www.vice.com
+  - https://video.vice.com
+  evidence: 'Observed 2026-09-04 in the live response header access-control-allow-headers: Authorization,
+    X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type.'
+  note: Cookie-session nonce; only usable from a browser session already logged into wp-admin.
+- name: viceApiClient
+  type: opaque-client-credential
+  hosts:
+  - https://api.vice.com
+  evidence: 'Every anonymous request to api.vice.com — including the control path /vice-media-negative-control-7f3ab91c,
+    which cannot exist — returned HTTP 401 {"message":"No client found attached to request","code":"invalid_req_client","status":401}
+    from a service identifying itself as x-app-version: api-auth 1.13.2. The gate sets SB_SID / AUTH_SID
+    / C_U cookies on Domain=vice.com.'
+  note: The credential scheme is not documented anywhere public. The error name (invalid_req_client) and
+    the session cookies indicate a registered-client model, but the issuance path, token format and scope
+    model are all unobservable without a credential. Recorded as gated, not guessed.
+anonymous_read:
+  available: true
+  hosts:
+  - https://www.vice.com/wp-json
+  - https://video.vice.com/wp-json
+  note: 'The wp/v2 content collections read with no credential at all: posts, pages, media, search, types,
+    statuses, taxonomies, and the vice_section / profile / sp_product custom post types all returned HTTP
+    200 anonymously on 2026-09-04.'
+  gated_anonymously:
+  - /wp/v2/users
+  - /wp/v2/settings
+  - /wp/v2/comments
+  - /wp/v2/block-types
+  - /wp-abilities/v1/abilities
+  - /wp-abilities/v1/categories
+  - /byline-manager/v1/authors
+  - /wp-curate/v1/posts
+  - /elasticpress/v1/facets/taxonomies
+  - /vip/v1/sites

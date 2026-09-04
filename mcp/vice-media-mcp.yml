@@ -1,0 +1,99 @@
+generated: '2026-09-04'
+method: derived
+status: candidate
+source: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+note: Nobody ships an MCP server for this surface. Vice Media publishes none, no npm or PyPI package exists
+  (see packages/vice-media-packages.yml), and neither WordPress install declares an `mcp` namespace in
+  its route-discovery document - unlike some WordPress hosts in this catalog, which do. The tool list
+  below is a CANDIDATE derived from operations that were confirmed to return HTTP 200 anonymously on 2026-09-04;
+  every one binds to a real operationId in the derived contract. It is a design sketch, not a server.
+  Pointer type is X-MCPServerCandidate, never MCPServer.
+adjacent_agent_surface:
+  name: WordPress Abilities API
+  namespace: wp-abilities/v1
+  routes:
+  - /wp-abilities/v1/abilities
+  - /wp-abilities/v1/abilities/{name}
+  - /wp-abilities/v1/abilities/{name}/run
+  - /wp-abilities/v1/categories
+  status: declared but gated
+  evidence: GET https://www.vice.com/wp-json/wp-abilities/v1/abilities returned HTTP 401 rest_forbidden
+    on 2026-09-04, as did /categories.
+  note: 'This is the closest thing to an agent-executable surface on the host: a registry of named abilities
+    with a /run endpoint accepting GET, POST, PUT, PATCH and DELETE. It is present because WordPress core
+    now ships it, not because Vice Media enabled it deliberately, and the ability list cannot be enumerated
+    without a credential.'
+tools:
+- name: search_vice_articles
+  description: Search and filter the VICE editorial archive (822,047 posts across 20 language editions)
+    by free text, date range, category, tag, byline or language.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_posts
+  http: GET /wp/v2/posts
+  auth: none
+- name: get_vice_article
+  description: Fetch one VICE article by id, optionally with its author, featured image and terms embedded.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_posts_by_id
+  http: GET /wp/v2/posts/{id}
+  auth: none
+- name: search_all_content
+  description: Cross-type search returning posts, pages and terms with their permalinks.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_search
+  http: GET /wp/v2/search
+  auth: none
+- name: list_categories
+  description: List editorial categories with post counts and permalinks.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_categories
+  http: GET /wp/v2/categories
+  auth: none
+- name: list_tags
+  description: List tags with post counts.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_tags
+  http: GET /wp/v2/tags
+  auth: none
+- name: list_bylines
+  description: List contributor bylines with the number of pieces each carries.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_byline
+  http: GET /wp/v2/byline
+  auth: none
+- name: list_editions
+  description: List the 20 language editions with the archive size of each.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_platform_languages
+  http: GET /wp/v2/platform-languages
+  auth: none
+- name: list_sections
+  description: List VICE editorial sections.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_vice_section
+  http: GET /wp/v2/vice_section
+  auth: none
+- name: list_contributor_profiles
+  description: List contributor profile entries.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_profile
+  http: GET /wp/v2/profile
+  auth: none
+- name: list_pages
+  description: List static pages, including the legal and policy pages.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_pages
+  http: GET /wp/v2/pages
+  auth: none
+- name: get_oembed
+  description: Resolve a VICE permalink to a conformant oEmbed 1.0 rich response for embedding.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_oembed_1_0_embed
+  http: GET /oembed/1.0/embed
+  auth: none
+- name: list_content_types
+  description: List the content types this install registers.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_types
+  http: GET /wp/v2/types
+  auth: none
+- name: list_taxonomies
+  description: List the taxonomies this install registers.
+  source_operation: openapi/_ae-authored/vice-media-wp-rest-openapi.yml#get_wp_v2_taxonomies
+  http: GET /wp/v2/taxonomies
+  auth: none

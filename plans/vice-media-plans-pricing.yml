@@ -1,0 +1,49 @@
+generated: '2026-09-04'
+method: searched
+source: https://www.vice.com/en/section/membership/
+plan_count: 3
+api_plan_count: 0
+note: 'These are reader subscriptions, not API access tiers. Vice Media publishes NO pricing for any API:
+  the WordPress REST surface is served anonymously with no plan, key or quota attached, and api.vice.com
+  issues no credential a third party can buy. The membership tiers are recorded because they are the only
+  published, priced product on the site.'
+currency: USD
+plans:
+- name: Digital Monthly
+  price: 2.0
+  currency: USD
+  period: month
+  includes:
+  - Turn off all ads on VICE.com
+  - Exclusive New VICE Documentaries
+  - Member Exclusive Features & Columns
+  api_access: false
+  quota: null
+  overage: null
+- name: Digital Annual
+  price: 20.0
+  currency: USD
+  period: year
+  includes:
+  - Turn off all ads on VICE.com
+  - Exclusive New VICE Documentaries
+  - Member Exclusive Features & Columns
+  api_access: false
+  quota: null
+  overage: null
+- name: Print & Digital
+  price: 70.0
+  currency: USD
+  period: year
+  includes:
+  - Turn off all ads on VICE.com
+  - Exclusive New VICE Documentaries
+  - Member Exclusive Features & Columns
+  - 4 Magazines Delivered to Your Door
+  api_access: false
+  quota: null
+  overage: null
+related:
+- type: FulfillmentPolicy
+  url: https://www.vice.com/en/fulfillment-policy/
+  status: 200

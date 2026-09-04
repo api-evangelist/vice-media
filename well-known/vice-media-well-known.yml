@@ -1,0 +1,281 @@
+generated: '2026-09-04'
+method: probed
+source: live anonymous GET of the closed named-path list on every host in this record
+hit_count: 0
+note: Every named /.well-known path, plus /apis.json and /apis.yml, was probed anonymously on all four
+  hosts this record knows, on 2026-09-04. Nothing was served. vice.com and video.vice.com return the WordPress
+  404 template (a genuine 404 status with an HTML body), vicemedia.com returns its SPA 404, and api.vice.com
+  refuses the whole /.well-known/ prefix with HTTP 403 at nginx before its auth gate is reached. No document
+  was saved and NO WellKnown, SecurityTxt or AgentCard pointer is emitted from this file - it records
+  a verified absence, not a surface. VICE does publish a responsible-disclosure policy, but as an ordinary
+  editorial page (https://www.vice.com/en/vice-responsible-disclosure-policy/, HTTP 200), not as an RFC
+  9116 security.txt; see security/vice-media-vulnerability-disclosure.yml.
+path_echo_control: passed
+path_echo_control_note: The negative-control path /.well-known/vice-media-negative-control-7f3ab91c.json
+  was requested on every host and returned exactly the same 404 (or 403) as every real path, so none of
+  these hosts echoes the requested path back as a validly-shaped document.
+hosts:
+- host: https://www.vice.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: no document; 271525 byte HTML error page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: no document; 271533 byte HTML error page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: no document; 271539 byte HTML error page
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+    note: no document; 271537 byte HTML error page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: no document; 271524 byte HTML error page
+  - path: /.well-known/api-catalog.json
+    status: 404
+    file: null
+    note: no document; 271529 byte HTML error page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: no document; 271527 byte HTML error page
+  - path: /.well-known/ucp.json
+    status: 404
+    file: null
+    note: no document; 271521 byte HTML error page
+  - path: /.well-known/acp.json
+    status: 404
+    file: null
+    note: no document; 271521 byte HTML error page
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    file: null
+    note: no document; 271532 byte HTML error page
+  - path: /.well-known/apis.json
+    status: 404
+    file: null
+    note: no document; 271522 byte HTML error page
+  - path: /apis.json
+    status: 404
+    file: null
+    note: no document; 271510 byte HTML error page
+  - path: /apis.yml
+    status: 404
+    file: null
+    note: no document; 271509 byte HTML error page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: no document; 271528 byte HTML error page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: no document; 271523 byte HTML error page
+  - path: /.well-known/vice-media-negative-control-7f3ab91c.json
+    status: 404
+    file: null
+    note: negative control - a path that cannot exist
+- host: https://video.vice.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: no document; 173936 byte HTML error page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: no document; 173944 byte HTML error page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: no document; 173950 byte HTML error page
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+    note: no document; 173948 byte HTML error page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: no document; 173935 byte HTML error page
+  - path: /.well-known/api-catalog.json
+    status: 404
+    file: null
+    note: no document; 173940 byte HTML error page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: no document; 173938 byte HTML error page
+  - path: /.well-known/ucp.json
+    status: 404
+    file: null
+    note: no document; 173932 byte HTML error page
+  - path: /.well-known/acp.json
+    status: 404
+    file: null
+    note: no document; 173932 byte HTML error page
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    file: null
+    note: no document; 173943 byte HTML error page
+  - path: /.well-known/apis.json
+    status: 404
+    file: null
+    note: no document; 173933 byte HTML error page
+  - path: /apis.json
+    status: 404
+    file: null
+    note: no document; 173921 byte HTML error page
+  - path: /apis.yml
+    status: 404
+    file: null
+    note: no document; 173920 byte HTML error page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: no document; 173939 byte HTML error page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: no document; 173934 byte HTML error page
+  - path: /.well-known/vice-media-negative-control-7f3ab91c.json
+    status: 404
+    file: null
+    note: negative control - a path that cannot exist
+- host: https://api.vice.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/api-catalog.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/ucp.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/acp.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/aauth-resource.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/apis.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /apis.json
+    status: 401
+    file: null
+    note: no document; 90 byte HTML error page
+  - path: /apis.yml
+    status: 401
+    file: null
+    note: no document; 90 byte HTML error page
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+    note: host refuses the /.well-known/ prefix outright (nginx 403); no document
+  - path: /.well-known/vice-media-negative-control-7f3ab91c.json
+    status: 403
+    file: null
+    note: negative control - a path that cannot exist
+- host: https://www.vicemedia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/api-catalog.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/ucp.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/acp.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/apis.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /apis.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /apis.yml
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: no document; 4231 byte HTML error page
+  - path: /.well-known/vice-media-negative-control-7f3ab91c.json
+    status: 404
+    file: null
+    note: negative control - a path that cannot exist

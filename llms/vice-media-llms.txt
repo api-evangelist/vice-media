@@ -1,0 +1,84 @@
+# Vice Media
+
+> Vice Media is the Brooklyn youth-culture and news media company founded in 1994, which filed for
+> Chapter 11 in May 2023 and was acquired for $350 million by a Fortress Investment Group–led
+> consortium. It runs no developer programme and sells no API product. What it does serve — and
+> advertises in the head of every page — is a live, anonymously readable WordPress REST API on
+> vice.com carrying an editorial archive of 822,047 posts across 20 language editions, plus a
+> conformant oEmbed 1.0 provider endpoint and RSS 2.0 syndication.
+
+Generated 2026-09-04 by API Evangelist from live probes of vice.com, video.vice.com, api.vice.com
+and vicemedia.com. This file is not published by Vice Media; https://www.vice.com/llms.txt returns
+HTTP 404.
+
+## What is callable right now
+
+- [VICE WordPress REST API](https://www.vice.com/wp-json/): 601 declared routes; the wp/v2 content
+  namespaces read with no credential. No key, no signup, no plan, no rate-limit header.
+- [oEmbed 1.0 provider](https://www.vice.com/wp-json/oembed/1.0/embed): resolves a VICE permalink to
+  a conformant oEmbed rich response naming VICE as the provider.
+- [RSS 2.0 feed](https://www.vice.com/en/feed/): with the content, Dublin Core, Atom, slash and
+  Yahoo Media RSS namespaces.
+- [Sitemap index](https://www.vice.com/sitemap.xml): year-partitioned back to 1970; robots.txt
+  enumerates 30 of them and disallows nothing.
+
+## What is not
+
+- [VICE Platform API](https://api.vice.com/): every anonymous request, including a control path that
+  cannot exist, returns HTTP 401 `invalid_req_client` from a service identifying itself as
+  `api-auth 1.13.2`. No contract, path list or documentation is observable without a client
+  credential.
+- [VICE Video WordPress REST API](https://video.vice.com/wp-json/): a second install, 586 routes,
+  same shape — but its public archive returns `X-WP-Total: 1`. A live contract with nothing behind
+  it.
+- WordPress Abilities API (`/wp-json/wp-abilities/v1/abilities`): declared, and the closest thing to
+  an agent-executable surface here, but HTTP 401 anonymously.
+- `/wp/v2/users`, `/wp/v2/comments`, `/wp/v2/settings` and every editorial plugin namespace: HTTP 401.
+
+## Specs
+
+- [OpenAPI 3.1.0 — VICE WordPress REST](openapi/_ae-authored/vice-media-wp-rest-openapi.yml): 178
+  paths, 379 operations, derived verbatim from the live route-discovery document.
+- [OpenAPI 3.1.0 — VICE Video WordPress REST](openapi/_ae-authored/vice-media-video-wp-rest-openapi.yml):
+  160 paths, 349 operations.
+- [Route-discovery source — vice.com](openapi/vice-media-wp-rest-discovery-original.json): the
+  verbatim `/wp-json/` response, HTTP 200, fetched 2026-09-04.
+- [Route-discovery source — video.vice.com](openapi/vice-media-video-wp-rest-discovery-original.json)
+- [Overlay](overlays/vice-media-wp-rest-overlay.yaml): API Evangelist observations, kept out of the
+  contract itself.
+
+## How to call it correctly
+
+- [Skill — search the archive](skills/vice-media-search-the-archive.md)
+- [Skill — walk editions, sections and bylines](skills/vice-media-walk-editions-and-taxonomies.md)
+- [Skill — embed an article with oEmbed](skills/vice-media-embed-a-vice-article.md)
+- [Conventions](conventions/vice-media-conventions.yml): pagination, sparse fields, expansion,
+  error envelope, and the honest answers on idempotency (none) and reversibility.
+- [Error catalog](errors/vice-media-problem-types.yml): the WordPress envelope, not RFC 9457.
+- [Data model](data-model/vice-media-data-model.yml): including the VICE-specific `vice_section`,
+  `profile`, `sp_product` types and the `byline`, `sp_language`, `sp_brand` taxonomies.
+- [Authentication](authentication/vice-media-authentication.yml)
+- [Rate limits](rate-limits/vice-media-rate-limits.yml): `limit_count: 0` — nothing published,
+  nothing signalled.
+- [MCP candidate](mcp/vice-media-mcp.yml): a derived sketch. No MCP server exists.
+
+## Two things worth knowing before you build on this
+
+1. **Authorship is a taxonomy, not a user.** `/wp/v2/users` is closed. Read `byline` terms instead.
+2. **Do not walk 822,047 posts by page number.** WordPress refuses deep offsets at that size.
+   Partition by year, language edition or category.
+
+## Company
+
+- [VICE](https://www.vice.com/)
+- [About VICE Digital Publishing](https://www.vice.com/en/about-vice-digital-publishing/): vice.com
+  is "owned and operated by VICE Digital Publishing, LLC a Savage Ventures company".
+- [VICE Media corporate](https://www.vicemedia.com/)
+- [Responsible disclosure policy](https://www.vice.com/en/vice-responsible-disclosure-policy/):
+  infosec@vice.com, PGP available, explicit safe harbor, no bounty. Not served at
+  /.well-known/security.txt, which 404s.
+- [GitHub](https://github.com/VICEMedia): 56 public repos, no SDK, no client library.
+- [Membership](https://www.vice.com/en/section/membership/): $2/mo, $20/yr, $70/yr print+digital.
+  Reader subscriptions — none of them buys API access.
+- [Terms of Service](https://www.vice.com/en/terms/)
+- [Privacy Policy](https://www.vice.com/en/privacy/)

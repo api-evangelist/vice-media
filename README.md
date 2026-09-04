@@ -64,5 +64,80 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Vice Media is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/vice-media_stock/
+Vice Media is the Brooklyn, New York youth-culture and news media company founded in 1994 in Montreal,
+which filed for Chapter 11 in May 2023 and was acquired for $350 million by a consortium led by Fortress
+Investment Group. It operates through Vice Studios Group, Vice TV, the Virtue creative agency and Vice
+Digital.
+
+## What this profile found
+
+**Vice Media runs no developer programme.** There is no developer portal, no API reference, no getting
+started guide, no SDK, no CLI, no API pricing and no developer support channel. Searching for one and
+finding nothing is a finding, and it is recorded as `x-api-posture: no-product-api`.
+
+What does exist is a real, live, anonymously readable HTTP contract, and the company advertises it
+itself:
+
+- **`https://www.vice.com/wp-json/`** — a WordPress REST route-discovery document declaring **601
+  routes**, linked from the head of every page on the site as
+  `<link rel="https://api.w.org/" href="https://www.vice.com/wp-json/" />`, with a `robots.txt` that
+  disallows nothing. The `wp/v2` content namespaces read with **no credential at all**: the collection
+  returns `X-WP-Total: 822047` across 20 language editions.
+- **`https://video.vice.com/wp-json/`** — a second install, 586 routes, the same shape, and an
+  effectively empty public archive (`X-WP-Total: 1`). A live contract with nothing behind it.
+- **`https://api.vice.com/`** — a credential-gated platform gateway. Every anonymous request, including
+  a control path that cannot exist, returned the identical
+  `{"message":"No client found attached to request","code":"invalid_req_client","status":401}` from a
+  service identifying itself as `x-app-version: api-auth 1.13.2`. Nothing about its contract is
+  observable without a client credential, so nothing about it is asserted.
+
+`openapi/_ae-authored/vice-media-wp-rest-openapi.yml` (178 paths, **379 operations**) and its video
+sibling (160 paths, 349 operations) are **derived by API Evangelist**, mechanically and verbatim, from
+those route-discovery documents — which are saved next to them unmodified. Vice Media publishes no
+OpenAPI of its own.
+
+## Who actually operates the surface
+
+vice.com's own About page states it is **"owned and operated by VICE Digital Publishing, LLC a Savage
+Ventures company"** (Nashville, TN). That is the joint venture Vice Media formed with Savage Ventures in
+2024, in which Vice Media retained brand control; the `savage/v1` and `savage-platform/v1` namespaces in
+the route document are that operator's plugins. The surfaces are catalogued here because vice.com is the
+VICE brand's own domain, and the operator relationship is recorded in `x-operator` rather than glossed
+over. Content licensing and pitches route to `savage.ventures` addresses; press, advertising and security
+remain on `vice.com`.
+
+## Two things worth knowing before building on it
+
+1. **Authorship is a taxonomy, not a user.** `/wp/v2/users` returns 401, and so does the
+   `byline-manager/v1` namespace that would resolve a byline to a contributor. What reads anonymously is
+   the `byline` taxonomy itself. The same is true of `/wp/v2/comments`, `/wp/v2/settings`, the
+   ElasticPress facets and the WordPress Abilities registry — all 401.
+2. **Do not walk 822,047 posts by page number.** WordPress refuses deep offsets at that size. Partition
+   by year, by `platform-languages` term, or by category — every taxonomy term carries a `count`, so you
+   can size a slice before fetching it.
+
+## Standards it does speak
+
+A conformant **oEmbed 1.0** provider endpoint (`provider_name: "VICE"`), **RSS 2.0** with Dublin Core,
+Atom, slash and Yahoo Media RSS namespaces, a **sitemaps.org 0.9** index partitioned by year back to
+1970, RFC 8288 `Link` pagination, and schema.org JSON-LD on article pages. For a publisher, that is the
+set that matters — an integrator who already speaks oEmbed and RSS needs no VICE-specific connector.
+
+What it does not: no `/.well-known/` document of any kind on any host, no `apis.json`, no OAuth or OIDC
+metadata, no RFC 9457 problem details, no agent card, and no MCP server.
+
+## Access posture and security
+
+`https://www.vice.com/robots.txt` carries `User-agent: * / Disallow:` — nothing is disallowed, and no
+Content Signals policy or AI-crawler rule is declared. The file is otherwise a Yoast-generated sitemap
+list.
+
+VICE publishes a substantive **responsible-disclosure policy** at
+https://www.vice.com/en/vice-responsible-disclosure-policy/ — `infosec@vice.com`, PGP available, explicit
+safe-harbor language, and a clear statement that no bounty is paid. It is linked from the footer of every
+page but is **not** served at `/.well-known/security.txt`, which returns 404. Publishing those few lines
+at the RFC 9116 path is the single cheapest improvement available to this provider.
+
+`vicemediagroup.com` serves an **expired TLS certificate** (observed 2026-09-04); the `www.` form
+redirects to `www.vicemedia.com` and is fine. `www.vice.com` sets no HSTS header, though `api.vice.com`
+does.

@@ -1,0 +1,42 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for VICE Video WordPress REST API
+  version: 1.0.0
+extends: openapi/_ae-authored/vice-media-video-wp-rest-openapi.yml
+x-generated: '2026-09-04'
+x-method: generated
+x-note: Captures API Evangelist's observations about this contract without mutating it. The target document
+  is itself derived verbatim from the provider's live route-discovery response; this overlay is the only
+  place our own judgement is recorded.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/vice-media/
+    x-apievangelist-posture: no-product-api
+    x-apievangelist-note: A publishing platform's content API, not a commercial developer product. No
+      portal, reference, SDK, API pricing or support channel exists.
+    x-apievangelist-operator: Served by VICE Digital Publishing, LLC, the Savage Ventures joint venture,
+      under the VICE brand.
+- target: $.info
+  update:
+    x-idempotency: none
+    x-rate-limit-signal: none
+    x-error-format: wordpress-rest (not RFC 9457)
+- target: $.servers[0]
+  update:
+    x-anonymous-read: true
+    x-observed: '2026-09-04'
+- target: $.paths['/wp/v2/posts'].get
+  update:
+    x-anonymous: true
+    x-collection-size: 1
+    x-collection-size-source: x-wp-total response header, observed 2026-09-04
+- target: $.paths['/wp/v2/users'].get
+  update:
+    x-anonymous: false
+    x-observed-status: 401
+- target: $.paths['/wp-abilities/v1/abilities'].get
+  update:
+    x-anonymous: false
+    x-observed-status: 401
+    x-note: WordPress Abilities API - the agent-facing registry - is capability-gated here.

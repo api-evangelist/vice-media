@@ -1,0 +1,180 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/_ae-authored/vice-media-wp-rest-openapi.yml, plus GET /wp-json/wp/v2/types and GET /wp-json/wp/v2/taxonomies
+  on https://www.vice.com (both HTTP 200, 2026-09-04)
+note: 'The entity graph is read from the site''s own live type and taxonomy registries, so the VICE-specific
+  entities (vice_section, profile, sp_product) and the VICE-specific taxonomies (byline, sp_brand, sp_language)
+  are the real ones this publisher registered, not WordPress defaults. Entities marked public: false are
+  declared in the contract but returned HTTP 401 anonymously.'
+entities:
+- name: post
+  label: Posts
+  rest_base: posts
+  collection: /wp/v2/posts
+  operation: get_wp_v2_posts
+  public: true
+  count: 822047
+  count_source: x-wp-total header on GET /wp-json/wp/v2/posts?per_page=1, 2026-09-04
+  note: The editorial archive. 20 language editions share one collection, partitioned by sp_language.
+- name: page
+  label: Pages
+  rest_base: pages
+  collection: /wp/v2/pages
+  operation: get_wp_v2_pages
+  public: true
+- name: attachment
+  label: Media
+  rest_base: media
+  collection: /wp/v2/media
+  operation: get_wp_v2_media
+  public: true
+  note: Returned an empty array anonymously; the collection is readable but exposes nothing.
+- name: vice_section
+  label: Sections
+  rest_base: vice_section
+  collection: /wp/v2/vice_section
+  operation: get_wp_v2_vice_section
+  public: true
+  note: VICE-specific post type - the site's editorial sections (Pulse, Life, Tech, Munchies, Music, Waypoint,
+    Photography).
+- name: profile
+  label: Profiles
+  rest_base: profile
+  collection: /wp/v2/profile
+  operation: get_wp_v2_profile
+  public: true
+  note: VICE-specific post type - contributor profiles, paired with the byline taxonomy.
+- name: sp_product
+  label: Products
+  rest_base: sp_product
+  collection: /wp/v2/sp_product
+  operation: get_wp_v2_sp_product
+  public: true
+  note: Savage-platform commerce post type; the membership and magazine products.
+- name: user
+  label: Users
+  rest_base: users
+  collection: /wp/v2/users
+  operation: get_wp_v2_users
+  public: false
+  note: HTTP 401 rest_forbidden 'Sorry, you are not allowed to list users.'
+- name: comment
+  label: Comments
+  rest_base: comments
+  collection: /wp/v2/comments
+  operation: get_wp_v2_comments
+  public: false
+  note: HTTP 401 rest_forbidden 'Sorry, you are not allowed to access comments.' (probed 2026-09-04).
+    Declared in the contract, closed on the wire.
+taxonomies:
+- name: category
+  rest_base: categories
+  operation: get_wp_v2_categories
+  hierarchical: true
+  applies_to:
+  - post
+  - vice_section
+  public: true
+- name: post_tag
+  rest_base: tags
+  operation: get_wp_v2_tags
+  hierarchical: false
+  applies_to:
+  - post
+  - sp_product
+  public: true
+- name: byline
+  rest_base: byline
+  operation: get_wp_v2_byline
+  applies_to:
+  - post
+  - page
+  - attachment
+  - revision
+  - wp_template
+  - wp_template_part
+  - jetpack_form
+  public: true
+  note: VICE-specific. Authorship is modelled as a TAXONOMY term, not as the WordPress user - which is
+    why /wp/v2/users is closed while bylines read anonymously. The byline-manager/v1 namespace that resolves
+    a byline to a contributor profile is itself gated (HTTP 401).
+- name: sp_brand
+  rest_base: brands
+  operation: get_wp_v2_brands
+  applies_to:
+  - sp_product
+  public: true
+- name: sp_language
+  rest_base: platform-languages
+  operation: get_wp_v2_platform_languages
+  applies_to:
+  - post
+  - page
+  - vice_section
+  public: true
+  note: The 20-edition split. The first term returned was 'Bahasa Indonesia' with count 12857, so term
+    counts give per-edition archive sizes directly.
+relationships:
+- from: post
+  to: category
+  kind: has_many
+  via: categories
+- from: post
+  to: post_tag
+  kind: has_many
+  via: tags
+- from: post
+  to: byline
+  kind: has_many
+  via: byline
+- from: post
+  to: sp_language
+  kind: has_one
+  via: platform-languages
+- from: post
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: post
+  to: user
+  kind: belongs_to
+  via: author
+  note: The author id is returned, but /wp/v2/users cannot be read anonymously to resolve it. Use byline
+    instead.
+- from: post
+  to: comment
+  kind: has_many
+  via: post
+  note: Declared, but the comments collection returns HTTP 401 anonymously.
+- from: vice_section
+  to: category
+  kind: has_many
+  via: categories
+- from: vice_section
+  to: sp_language
+  kind: has_one
+  via: platform-languages
+- from: sp_product
+  to: sp_brand
+  kind: has_many
+  via: brands
+- from: sp_product
+  to: post_tag
+  kind: has_many
+  via: tags
+- from: page
+  to: byline
+  kind: has_many
+  via: byline
+- from: attachment
+  to: post
+  kind: belongs_to
+  via: post
+identifiers:
+  scheme: integer auto-increment
+  example: 2093009
+  note: No prefixed or opaque ids. Ids are site-local WordPress post ids.
+traversal:
+  style: HAL-flavoured _links plus ?_embed=1
+  note: _embed=1 returns _embedded.author, _embedded['wp:featuredmedia'] and _embedded['wp:term'] in one
+    round trip (verified live 2026-09-04).

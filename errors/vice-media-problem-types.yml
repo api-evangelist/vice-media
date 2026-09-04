@@ -1,0 +1,62 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/_ae-authored/vice-media-wp-rest-openapi.yml, plus error bodies observed live on https://www.vice.com/wp-json/
+  on 2026-09-04
+format: wordpress-rest
+rfc9457: false
+media_type: application/json
+envelope:
+  code: machine-readable error slug
+  message: human-readable message, localized to the site language
+  data:
+    status: the HTTP status, repeated in the body
+    params: optional map of invalid parameter names to messages
+note: Vice Media publishes no error reference. Every entry below was either observed live on the wire
+  on 2026-09-04 or is WordPress core's documented envelope; no code is listed that was not actually returned
+  by one of these hosts.
+problems:
+- status: 401
+  code: rest_forbidden
+  title: Not authenticated or not permitted
+  observed_message: Sorry, you are not allowed to do that.
+  observed_at: https://www.vice.com/wp-json/wp/v2/settings
+  remediation: Authenticate with a WordPress application password or an editor session. Third parties
+    cannot obtain either; these routes are effectively closed.
+- status: 401
+  code: rest_forbidden
+  title: User listing not permitted
+  observed_message: Sorry, you are not allowed to list users.
+  observed_at: https://www.vice.com/wp-json/wp/v2/users?per_page=1
+- status: 401
+  code: rest_block_type_cannot_view
+  title: Block type registry not readable
+  observed_message: Sorry, you are not allowed to manage block types.
+  observed_at: https://www.vice.com/wp-json/wp/v2/block-types
+- status: 401
+  code: ep_rest_forbidden
+  title: ElasticPress facet data not readable
+  observed_message: Sorry, you cannot view this resource.
+  observed_at: https://www.vice.com/wp-json/elasticpress/v1/facets/taxonomies
+- status: 404
+  code: oembed_invalid_url
+  title: oEmbed URL does not resolve to a post on this site
+  observed_message: Not Found
+  observed_at: https://www.vice.com/wp-json/oembed/1.0/embed?url=https://www.vice.com/
+  remediation: The oEmbed endpoint resolves permalinks of individual posts and pages, not the site root;
+    an article permalink returns HTTP 200 with a full oEmbed 1.0 rich response.
+- status: 404
+  code: rest_no_route
+  title: No route matched
+  remediation: GET /wp-json/ for the live route list.
+- status: 400
+  code: rest_invalid_param
+  title: Invalid parameter
+  note: WordPress core returns data.params as a map of parameter name to message. Not observed on this
+    host during the pass, but declared by every operation's argument schema.
+other_hosts:
+- host: https://api.vice.com
+  status: 401
+  code: invalid_req_client
+  message: No client found attached to request
+  note: A single uniform error for every path, including a control path that cannot exist. This is an
+    edge auth gate, not a per-resource error surface.

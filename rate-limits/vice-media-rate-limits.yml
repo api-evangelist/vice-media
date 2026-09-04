@@ -1,0 +1,31 @@
+generated: '2026-09-04'
+method: probed
+source: response headers observed on https://www.vice.com/wp-json/wp/v2/posts, 2026-09-04
+limit_count: 0
+documented: false
+note: No rate limit is published anywhere and none is signalled on the wire. The full response header
+  set on a successful collection request carries no X-RateLimit-*, no RateLimit-* (RFC 9239 draft) and
+  no Retry-After. An agent calling this API has no runtime signal telling it how hard it may push, which
+  is the finding - not an absence of limits. Enforcement almost certainly exists at the CDN, but it is
+  invisible to the caller until it fires.
+limits: []
+response_headers:
+  rate_limit_headers: []
+  observed_headers:
+  - x-wp-total
+  - x-wp-totalpages
+  - link
+  - x-cache
+  - x-rq
+  - access-control-expose-headers
+  - vary
+  - x-robots-tag
+  exhaustion_status: null
+  retry_after: false
+pagination_caps:
+- param: per_page
+  maximum: 100
+  evidence: 'declared in the route-discovery document as maximum: 100 on every wp/v2 collection'
+other_hosts:
+- host: https://api.vice.com
+  note: Credential-gated; no limit observable without a client. HTTP 401 on every path.

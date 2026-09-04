@@ -1,0 +1,49 @@
+generated: '2026-09-04'
+method: searched
+source: registry.npmjs.org search + direct package lookups, pypi.org/pypi JSON API, and api.github.com/orgs/VICEMedia,
+  all on 2026-09-04
+package_count: 0
+official_sdk_count: 0
+packages: []
+note: 'Vice Media ships no first-party client library in any registry. Direct lookups returned HTTP 404
+  for npm @vice/sdk, vice-media, vice-api and @vicemedia/sdk, and for PyPI vice-media. The PyPI package
+  named `vice` returns HTTP 200 but is VICE (Versatile Integrator for Chemical Evolution), an astrophysics
+  library with no relationship to this company - not claimed. The VICEMedia GitHub organisation (56 public
+  repos, created 2013-07-08, blog https://www.vice.com) publishes no SDK either: its public repos are
+  hiring exercises, security training targets and forks of third-party tools. No SDKs pointer is emitted.'
+negative_lookups:
+- registry: npm
+  name: '@vice/sdk'
+  status: 404
+  version: null
+- registry: npm
+  name: vice-media
+  status: 404
+  version: null
+- registry: npm
+  name: vice-api
+  status: 404
+  version: null
+- registry: npm
+  name: '@vicemedia/sdk'
+  status: 404
+  version: null
+- registry: pypi
+  name: vice-media
+  status: 404
+  version: null
+- registry: pypi
+  name: vice
+  status: 200
+  version: null
+  note: different project (astrophysics); not Vice Media, not claimed
+github_organization:
+  url: https://github.com/VICEMedia
+  name: VICE Media, Inc.
+  public_repos: 56
+  created: '2013-07-08'
+  location: Brooklyn, NY
+  blog: https://www.vice.com
+  note: Attribution is first-party and unambiguous - the org's own blog field is https://www.vice.com.
+    Most recent push observed 2026-04-18 (backend-date-challenge). No client library, no CLI, no published
+    .proto and no WSDL.
