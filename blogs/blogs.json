@@ -1,0 +1,21 @@
+{
+  "repo": "vice-media",
+  "feeds": [
+    {
+      "source": "https://github.com/VICEMedia",
+      "feed_url": "https://github.com/VICEMedia",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://www.vice.com/en/",
+      "feed_url": "https://www.vice.com/en/feed/",
+      "title": "",
+      "saved": 10,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-09-06T19:17:18Z"
+}
