@@ -51,59 +51,16 @@ tags:
 - oEmbed
 - Brooklyn
 apis:
-- aid: vice-media:vice-media-wordpress-rest-api
-  name: VICE WordPress REST API
-  description: >-
-    The live WordPress REST API served by vice.com. 601 routes are declared by the route-discovery
-    document at https://www.vice.com/wp-json/, which the site advertises in the head of every page as
-    <link rel="https://api.w.org/">. The core content namespaces read anonymously — posts (822,047 of
-    them per the X-WP-Total header), pages, media, search, the vice_section / profile / sp_product custom
-    post types, and the category, tag, byline, brand and platform-language taxonomies. Users, settings,
-    block types and every editorial plugin namespace return HTTP 401.
-  humanURL: https://www.vice.com/wp-json/
-  baseURL: https://www.vice.com/wp-json
-  tags:
-  - Content
-  - Publishing
-  - WordPress
-  - oEmbed
-  properties:
-  - type: OpenAPI
-    url: openapi/_ae-authored/vice-media-wp-rest-openapi.yml
-  - type: DataModel
-    url: data-model/vice-media-data-model.yml
-  - type: ErrorCatalog
-    url: errors/vice-media-problem-types.yml
-  - type: Conventions
-    url: conventions/vice-media-conventions.yml
-- aid: vice-media:vice-media-video-wordpress-rest-api
-  name: VICE Video WordPress REST API
-  description: >-
-    A second WordPress install answering on video.vice.com with 586 declared routes and the same core
-    content namespaces, advertised the same way in the page head. Its public archive is effectively
-    empty — the posts collection returns X-WP-Total 1 — so the surface is a live contract with almost no
-    content behind it.
-  humanURL: https://video.vice.com/wp-json/
-  baseURL: https://video.vice.com/wp-json
-  tags:
-  - Content
-  - Video
-  - WordPress
-  properties:
-  - type: OpenAPI
-    url: openapi/_ae-authored/vice-media-video-wp-rest-openapi.yml
-  - type: Overlay
-    url: overlays/vice-media-video-wp-rest-overlay.yaml
 - aid: vice-media:vice-media-platform-api
   name: VICE Platform API
   description: >-
     An authenticated platform gateway on api.vice.com, running nginx in front of an Express service that
-    identifies itself as "api-auth 1.13.2" in the x-app-version response header. Every path probed
-    anonymously on 2026-09-04, including a control path that cannot exist, returned an identical HTTP 401
-    {"message":"No client found attached to request","code":"invalid_req_client","status":401}, so no
-    contract, path list or documentation is observable without a client credential. Its
-    content-security-policy names the legacy VICE international properties (viceland.com, viceland.nl,
-    vicesports.nl, vicemoney.nl, vicebelgique.com) as permitted frame ancestors.
+    identifies itself as "api-auth 1.13.2" in the x-app-version response header. Every path probed anonymously
+    on 2026-09-04, including a control path that cannot exist, returned an identical HTTP 401 {"message":"No
+    client found attached to request","code":"invalid_req_client","status":401}, so no contract, path
+    list or documentation is observable without a client credential. Its content-security-policy names
+    the legacy VICE international properties (viceland.com, viceland.nl, vicesports.nl, vicemoney.nl,
+    vicebelgique.com) as permitted frame ancestors.
   humanURL: https://api.vice.com/
   baseURL: https://api.vice.com
   tags:
@@ -112,12 +69,84 @@ apis:
   properties:
   - type: Authentication
     url: authentication/vice-media-authentication.yml
+- aid: vice-media:vice-media-oembed-1-0-api
+  name: Vice Media Oembed/1.0 API
+  description: >-
+    oEmbed 1.0 provider endpoints — discovery and proxy for embeddable representations of VICE articles
+    and videos.
+  humanURL: https://www.vice.com/wp-json/
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - oembed/1.0
+  properties:
+  - type: OpenAPI
+    url: openapi/vice-media-oembed-1-0-api-openapi.yml
+  - type: DataModel
+    url: data-model/vice-media-data-model.yml
+  - type: ErrorCatalog
+    url: errors/vice-media-problem-types.yml
+  - type: Conventions
+    url: conventions/vice-media-conventions.yml
+- aid: vice-media:vice-media-root-api
+  name: Vice Media Root API
+  description: REST API index / namespace and route discovery.
+  humanURL: https://www.vice.com/wp-json/
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - root
+  properties:
+  - type: OpenAPI
+    url: openapi/vice-media-root-api-openapi.yml
+  - type: DataModel
+    url: data-model/vice-media-data-model.yml
+  - type: ErrorCatalog
+    url: errors/vice-media-problem-types.yml
+  - type: Conventions
+    url: conventions/vice-media-conventions.yml
+- aid: vice-media:vice-media-wp-abilities-v1-api
+  name: Vice Media Wp Abilities/v1 API
+  description: >-
+    WordPress Abilities API — the registry of named abilities an agent can discover and run. Read and
+    run are capability-gated (observed HTTP 401 anonymously).
+  humanURL: https://www.vice.com/wp-json/
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - wp-abilities/v1
+  properties:
+  - type: OpenAPI
+    url: openapi/vice-media-wp-abilities-v1-api-openapi.yml
+  - type: DataModel
+    url: data-model/vice-media-data-model.yml
+  - type: ErrorCatalog
+    url: errors/vice-media-problem-types.yml
+  - type: Conventions
+    url: conventions/vice-media-conventions.yml
+- aid: vice-media:vice-media-wp-v2-api
+  name: Vice Media Wp/v2 API
+  description: >-
+    WordPress core content API — posts, pages, media, custom post types (sections, profiles, products),
+    taxonomies (categories, tags, bylines, brands, platform languages), search, types, statuses and settings.
+  humanURL: https://www.vice.com/wp-json/
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - wp/v2
+  properties:
+  - type: OpenAPI
+    url: openapi/vice-media-wp-v2-api-openapi.yml
+  - type: DataModel
+    url: data-model/vice-media-data-model.yml
+  - type: ErrorCatalog
+    url: errors/vice-media-problem-types.yml
+  - type: Conventions
+    url: conventions/vice-media-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/vice-media-video-wp-rest-overlay.yaml
 - type: Website
   url: https://www.vice.com/
 - type: CorporateWebsite
