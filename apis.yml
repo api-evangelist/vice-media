@@ -93,6 +93,8 @@ apis:
   humanURL: https://www.vice.com/wp-json/
   baseURL: https://www.vice.com/wp-json
   tags:
+  - Root
+  tags_raw:
   - root
   properties:
   - type: OpenAPI
