@@ -12,7 +12,7 @@
       "source": "https://www.vice.com/en/",
       "feed_url": "https://www.vice.com/en/feed/",
       "title": "",
-      "saved": 3,
+      "saved": 0,
       "method": "discovered"
     },
     {
@@ -23,6 +23,6 @@
       "method": "feed"
     }
   ],
-  "post_count": 23,
-  "fetched": "2026-09-13T13:00:00Z"
+  "post_count": 33,
+  "fetched": "2026-09-19T20:17:39Z"
 }
