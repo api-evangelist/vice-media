@@ -1,0 +1,208 @@
+openapi: 3.2.0
+info:
+  title: Vice Media Oembed/1.0 API
+  version: wp/v2
+  contact:
+    name: VICE Media security / responsible disclosure
+    email: infosec@vice.com
+    url: https://www.vice.com/en/vice-responsible-disclosure-policy/
+  termsOfService: https://www.vice.com/en/terms/
+  x-apievangelist-method: derived
+  x-refined-note:
+  - x-derived-from differs across the merged source definitions and was not carried
+  x-derived-on: '2026-09-04'
+  description: 'Operations tagged oembed/1.0 across 2 of this provider''s published API definitions: vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://video.vice.com
+  description: Production
+- url: https://www.vice.com
+  description: Production
+tags:
+- name: oembed/1.0
+  description: oEmbed 1.0 provider endpoints — discovery and proxy for embeddable representations of VICE articles and videos.
+paths:
+  /oembed/1.0:
+    get:
+      operationId: get_oembed_1_0
+      summary: GET /oembed/1.0
+      description: '`GET` on the WordPress REST route `/oembed/1.0` in namespace `oembed/1.0`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - oembed/1.0
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: oembed/1.0
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /oembed/1.0/embed:
+    get:
+      operationId: get_oembed_1_0_embed
+      summary: GET /oembed/1.0/embed
+      description: '`GET` on the WordPress REST route `/oembed/1.0/embed` in namespace `oembed/1.0`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - oembed/1.0
+      parameters:
+      - name: url
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+        description: The URL of the resource for which to fetch oEmbed data.
+      - name: format
+        in: query
+        required: false
+        schema:
+          default: json
+      - name: maxwidth
+        in: query
+        required: false
+        schema:
+          default: 600
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /oembed/1.0/proxy:
+    get:
+      operationId: get_oembed_1_0_proxy
+      summary: GET /oembed/1.0/proxy
+      description: '`GET` on the WordPress REST route `/oembed/1.0/proxy` in namespace `oembed/1.0`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - oembed/1.0
+      parameters:
+      - name: url
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+        description: The URL of the resource for which to fetch oEmbed data.
+      - name: format
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          default: json
+        description: The oEmbed format to use.
+      - name: maxwidth
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 600
+        description: The maximum width of the embed frame in pixels.
+      - name: maxheight
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: The maximum height of the embed frame in pixels.
+      - name: discover
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+        description: Whether to perform an oEmbed discovery request for unsanctioned providers.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST error envelope, observed live on this host. It is NOT RFC 9457 application/problem+json.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_forbidden.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status repeated in the body.
+      required:
+      - code
+      - message
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (HTTP Basic). The live discovery document declares this as the site's authentication method, with the authorization endpoint at https://video.vice.com/wp-admin/authorize-application.php.
+    wpNonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: WordPress cookie-authentication nonce. Advertised by the live server in its Access-Control-Allow-Headers response header (Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type).
+x-refined-from:
+- vice-media-video-wp-rest-openapi.yml
+- vice-media-wp-rest-openapi.yml

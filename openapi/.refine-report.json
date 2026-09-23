@@ -1,0 +1,32 @@
+{
+  "provider": "vice-media",
+  "sources": [
+    "_ae-authored/vice-media-video-wp-rest-openapi.yml",
+    "_ae-authored/vice-media-wp-rest-openapi.yml"
+  ],
+  "outputs": [
+    "vice-media-oembed-1-0-api-openapi.yml",
+    "vice-media-root-api-openapi.yml",
+    "vice-media-wp-abilities-v1-api-openapi.yml",
+    "vice-media-wp-v2-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "vice-media-video-wp-rest-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "vice-media-wp-rest-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'oembed/1.0' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
+    "tag 'root' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
+    "tag 'wp-abilities/v1' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
+    "tag 'wp/v2' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "vice-media-oembed-1-0-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vice-media-root-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vice-media-wp-abilities-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vice-media-wp-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

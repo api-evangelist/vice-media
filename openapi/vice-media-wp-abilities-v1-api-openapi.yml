@@ -1,0 +1,504 @@
+openapi: 3.2.0
+info:
+  title: Vice Media Wp Abilities/v1 API
+  version: wp/v2
+  contact:
+    name: VICE Media security / responsible disclosure
+    email: infosec@vice.com
+    url: https://www.vice.com/en/vice-responsible-disclosure-policy/
+  termsOfService: https://www.vice.com/en/terms/
+  x-apievangelist-method: derived
+  x-refined-note:
+  - x-derived-from differs across the merged source definitions and was not carried
+  x-derived-on: '2026-09-04'
+  description: 'Operations tagged wp-abilities/v1 across 2 of this provider''s published API definitions: vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://video.vice.com
+  description: Production
+- url: https://www.vice.com
+  description: Production
+tags:
+- name: wp-abilities/v1
+  description: WordPress Abilities API — the registry of named abilities an agent can discover and run. Read and run are capability-gated (observed HTTP 401 anonymously).
+paths:
+  /wp-abilities/v1:
+    get:
+      operationId: get_wp_abilities_v1
+      summary: GET /wp-abilities/v1
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: wp-abilities/v1
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /wp-abilities/v1/abilities:
+    get:
+      operationId: get_wp_abilities_v1_abilities
+      summary: GET /wp-abilities/v1/abilities
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1/abilities` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to abilities in specific ability category.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /wp-abilities/v1/abilities/{name}:
+    parameters:
+    - name: name
+      in: path
+      required: true
+      description: Path segment matched by the WordPress route pattern `[a-zA-Z0-9\-\/]+`.
+      schema:
+        type: string
+        pattern: '[a-zA-Z0-9\-\/]+'
+    get:
+      operationId: get_wp_abilities_v1_abilities_by_name
+      summary: GET /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+)
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+)` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /wp-abilities/v1/abilities/{name}/run:
+    parameters:
+    - name: name
+      in: path
+      required: true
+      description: Path segment matched by the WordPress route pattern `[a-zA-Z0-9\-\/]+?`.
+      schema:
+        type: string
+        pattern: '[a-zA-Z0-9\-\/]+?'
+    get:
+      operationId: get_wp_abilities_v1_abilities_by_name_run
+      summary: GET /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      parameters:
+      - name: input
+        in: query
+        required: false
+        schema:
+          type:
+          - integer
+          - number
+          - boolean
+          - string
+          - array
+          - object
+          - 'null'
+          default: null
+        description: Input parameters for the ability execution.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: post_wp_abilities_v1_abilities_by_name_run
+      summary: POST /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run
+      description: '`POST` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type:
+                  - integer
+                  - number
+                  - boolean
+                  - string
+                  - array
+                  - object
+                  - 'null'
+                  default: null
+                  description: Input parameters for the ability execution.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    put:
+      operationId: put_wp_abilities_v1_abilities_by_name_run
+      summary: PUT /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run
+      description: '`PUT` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type:
+                  - integer
+                  - number
+                  - boolean
+                  - string
+                  - array
+                  - object
+                  - 'null'
+                  default: null
+                  description: Input parameters for the ability execution.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    patch:
+      operationId: patch_wp_abilities_v1_abilities_by_name_run
+      summary: PATCH /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run
+      description: '`PATCH` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type:
+                  - integer
+                  - number
+                  - boolean
+                  - string
+                  - array
+                  - object
+                  - 'null'
+                  default: null
+                  description: Input parameters for the ability execution.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: delete_wp_abilities_v1_abilities_by_name_run
+      summary: DELETE /wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run
+      description: '`DELETE` on the WordPress REST route `/wp-abilities/v1/abilities/(?P[a-zA-Z0-9\-\/]+?)/run` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      parameters:
+      - name: input
+        in: query
+        required: false
+        schema:
+          type:
+          - integer
+          - number
+          - boolean
+          - string
+          - array
+          - object
+          - 'null'
+          default: null
+        description: Input parameters for the ability execution.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /wp-abilities/v1/categories:
+    get:
+      operationId: get_wp_abilities_v1_categories
+      summary: GET /wp-abilities/v1/categories
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1/categories` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+  /wp-abilities/v1/categories/{slug}:
+    parameters:
+    - name: slug
+      in: path
+      required: true
+      description: Path segment matched by the WordPress route pattern `[a-z0-9]+(?:-[a-z0-9]+)*`.
+      schema:
+        type: string
+        pattern: '[a-z0-9]+(?:-[a-z0-9]+)*'
+    get:
+      operationId: get_wp_abilities_v1_categories_by_slug
+      summary: GET /wp-abilities/v1/categories/(?P[a-z0-9]+(?:-[a-z0-9]+)*)
+      description: '`GET` on the WordPress REST route `/wp-abilities/v1/categories/(?P[a-z0-9]+(?:-[a-z0-9]+)*)` in namespace `wp-abilities/v1`, as declared by the live route-discovery document at https://video.vice.com/wp-json/.'
+      tags:
+      - wp-abilities/v1
+      responses:
+        '200':
+          description: Success. WordPress returns the requested resource or collection as JSON.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          description: Not authenticated or not permitted. WordPress returns its standard error envelope, e.g. `{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}`.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    servers:
+    - url: https://video.vice.com
+      description: Production
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST error envelope, observed live on this host. It is NOT RFC 9457 application/problem+json.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_forbidden.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status repeated in the body.
+      required:
+      - code
+      - message
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords (HTTP Basic). The live discovery document declares this as the site's authentication method, with the authorization endpoint at https://video.vice.com/wp-admin/authorize-application.php.
+    wpNonce:
+      type: apiKey
+      in: header
+      name: X-WP-Nonce
+      description: WordPress cookie-authentication nonce. Advertised by the live server in its Access-Control-Allow-Headers response header (Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type).
+x-refined-from:
+- vice-media-video-wp-rest-openapi.yml
+- vice-media-wp-rest-openapi.yml
