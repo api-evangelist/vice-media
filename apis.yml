@@ -69,78 +69,66 @@ apis:
   properties:
   - type: Authentication
     url: authentication/vice-media-authentication.yml
+- aid: vice-media:vice-com-website-wordpress-rest
+  name: Vice Media Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Vice Media website at www.vice.com: the route index
+    of the site's content management system, catalogued as one site surface rather than as separate APIs.
+  baseURL: https://www.vice.com/wp-json
+  tags:
+  - WordPress
+  x-surface: platform-generated
+  properties:
+  - type: Documentation
+    url: https://www.vice.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: vice-media:vice-media-oembed-1-0-api
   name: Vice Media Oembed/1.0 API
   description: >-
     oEmbed 1.0 provider endpoints — discovery and proxy for embeddable representations of VICE articles
     and videos.
-  humanURL: https://www.vice.com/wp-json/
-  baseURL: https://www.vice.com/wp-json
+  humanURL: https://api.vice.com/
+  baseURL: https://api.vice.com
   tags:
   - oembed/1.0
   properties:
   - type: OpenAPI
     url: openapi/vice-media-oembed-1-0-api-openapi.yml
-  - type: DataModel
-    url: data-model/vice-media-data-model.yml
-  - type: ErrorCatalog
-    url: errors/vice-media-problem-types.yml
-  - type: Conventions
-    url: conventions/vice-media-conventions.yml
 - aid: vice-media:vice-media-root-api
   name: Vice Media Root API
   description: REST API index / namespace and route discovery.
-  humanURL: https://www.vice.com/wp-json/
-  baseURL: https://www.vice.com/wp-json
+  humanURL: https://api.vice.com/
+  baseURL: https://api.vice.com
   tags:
-  - Root
-  tags_raw:
   - root
   properties:
   - type: OpenAPI
     url: openapi/vice-media-root-api-openapi.yml
-  - type: DataModel
-    url: data-model/vice-media-data-model.yml
-  - type: ErrorCatalog
-    url: errors/vice-media-problem-types.yml
-  - type: Conventions
-    url: conventions/vice-media-conventions.yml
 - aid: vice-media:vice-media-wp-abilities-v1-api
   name: Vice Media Wp Abilities/v1 API
   description: >-
     WordPress Abilities API — the registry of named abilities an agent can discover and run. Read and
     run are capability-gated (observed HTTP 401 anonymously).
-  humanURL: https://www.vice.com/wp-json/
-  baseURL: https://www.vice.com/wp-json
+  humanURL: https://api.vice.com/
+  baseURL: https://api.vice.com
   tags:
   - wp-abilities/v1
   properties:
   - type: OpenAPI
     url: openapi/vice-media-wp-abilities-v1-api-openapi.yml
-  - type: DataModel
-    url: data-model/vice-media-data-model.yml
-  - type: ErrorCatalog
-    url: errors/vice-media-problem-types.yml
-  - type: Conventions
-    url: conventions/vice-media-conventions.yml
 - aid: vice-media:vice-media-wp-v2-api
   name: Vice Media Wp/v2 API
   description: >-
     WordPress core content API — posts, pages, media, custom post types (sections, profiles, products),
     taxonomies (categories, tags, bylines, brands, platform languages), search, types, statuses and settings.
-  humanURL: https://www.vice.com/wp-json/
-  baseURL: https://www.vice.com/wp-json
+  humanURL: https://api.vice.com/
+  baseURL: https://api.vice.com
   tags:
   - wp/v2
   properties:
   - type: OpenAPI
     url: openapi/vice-media-wp-v2-api-openapi.yml
-  - type: DataModel
-    url: data-model/vice-media-data-model.yml
-  - type: ErrorCatalog
-    url: errors/vice-media-problem-types.yml
-  - type: Conventions
-    url: conventions/vice-media-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

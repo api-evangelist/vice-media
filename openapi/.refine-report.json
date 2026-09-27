@@ -21,7 +21,7 @@
     "tag 'root' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
     "tag 'wp-abilities/v1' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
     "tag 'wp/v2' spans 2 source specs (vice-media-video-wp-rest-openapi.yml, vice-media-wp-rest-openapi.yml): per-path servers applied",
-    "apis.yml register: already-registered"
+    "apis.yml register: written (+4 apis, 6 total)"
   ],
   "skipped": [
     "vice-media-oembed-1-0-api-openapi.yml: previously refined output, superseded by openapi/_original/",
