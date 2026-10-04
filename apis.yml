@@ -101,6 +101,8 @@ apis:
   humanURL: https://api.vice.com/
   baseURL: https://api.vice.com
   tags:
+  - Root
+  tags_raw:
   - root
   properties:
   - type: OpenAPI
